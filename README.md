@@ -14,6 +14,24 @@ cause nell hurts me deep inside that he uses external libraries
 he also hurts me by fucking NOT ADDING A FULL FUCKING NUKER
 
 so yea kys nell (jp ily)
+# Installation
+Linux:
+```
+apt update
+apt install python3
+git clone https://github.com/actuallyhorrid/astro.git
+cd astro
+pip install -r requirements
+python main.py
+```
+Windows:
+```
+cd astro
+python -m pip install -r requirements.txt
+python main.py
+```
+Repl.it:
+[![Run on Repl.it](https://repl.it/badge/github/plibither8/2048.cpp)](https://repl.it/github/actuallyhorrid/astro)
 # so when will you release the full nuker update
 whenever i like so suck a dick
 # credits
