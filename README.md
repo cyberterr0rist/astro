@@ -1,7 +1,7 @@
 # Astro massban
 a faster copy of nells shitty comet nuker
 
-also nell uses external libraries like its fucking cocaime
+also nell uses external libraries like its fucking cocaine
 
 man never learned to use ansi color codes
 
