@@ -25,39 +25,55 @@ class astro:
        os.system("clear")
 
     logo = """
-\u001b[34m                  ╔═╗╔═╗╔╦╗╦═╗╔═╗
-\u001b[34m                  ╠═╣╚═╗ ║ ╠╦╝║ ║
-\u001b[36m                  ╩ ╩╚═╝ ╩ ╩╚═╚═╝
-\u001b[35m                ───────────────────
-\u001b[35m                  Massban  Horrid
-
+\u001b[34m                   ╔═╗╔═╗╔╦╗╦═╗╔═╗
+\u001b[34m                   ╠═╣╚═╗ ║ ╠╦╝║ ║
+\u001b[36m                   ╩ ╩╚═╝ ╩ ╩╚═╚═╝
+\u001b[35m                 ───────────────────
+\u001b[35m                   Massban  Horrid
 """
+    banlogo = """
+\u001b[34m                   ╔═╗╔═╗╔╦╗╦═╗╔═╗
+\u001b[34m                   ╠═╣╚═╗ ║ ╠╦╝║ ║
+\u001b[36m                   ╩ ╩╚═╝ ╩ ╩╚═╚═╝
+\u001b[35m                 ───────────────────
+\u001b[35m                      Starting...
+"""
+
     print(logo)
-    token = getpass("\u001b[35mastro@localhost - enter token: ")
-    guild = input("\u001b[35mastro@localhost - enter guild id: ")
+    token = getpass("\u001b[35mastro@localhost\u001b[34m - enter token: \u001b[0m")
+    guild = input("\u001b[35mastro@localhost\u001b[34m - enter guild id: \u001b[0m")
     q = queue.Queue()
     session = FuturesSession()
     headers = {"Authorization": f"Bot {token}"}
+    apiv = ["v9", "v6"]
+    count = 0
 
     def massbansend():
         try:
             while True:
                 req, url, headers = astro.q.get()
                 s = req(url, headers=headers).result()
-                print(s.text)
+                astro.count += 1
+                print(f"\u001b[35mastro@localhost\u001b[34m - {astro.count} banned member")
+                if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
+                    print("\u001b[35mastro@localhost\u001b[34m - maximum non-guilded ban members has been exceded.")
+                    input()
+                    exit()
                 astro.q.task_done()
         except Exception:
-            pass
+            print(f"\u001b[35mastro@localhost\u001b[34m - error sending requests, contact horrid or nell.")
+            input()
+            exit()
 
     def idworker():
         for memberid in open("scraped/ids.txt"):
-            ranidapi = [f"https://discord.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{memberid}", f"https://discordapp.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{memberid}", f"https://canary.discord.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{memberid}", f"https://ptb.discord.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{memberid}"]
+            ranidapi = [f"https://discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}", f"https://discordapp.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}", f"https://canary.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}", f"https://ptb.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}"]
             astro.q.put((astro.session.put, random.choice(ranidapi), astro.headers))
         astro.q.join()
 
     def massbanworker():
         for member in open("scraped/scraped.txt"):
-            ranapi = [f"https://discord.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{member}", f"https://discordapp.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{member}", f"https://canary.discord.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{member}", f"https://ptb.discord.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{member}"]
+            ranapi = [f"https://discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://discordapp.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://canary.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://ptb.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}"]
             astro.q.put((astro.session.put, random.choice(ranapi), astro.headers))
         astro.q.join()
 
@@ -66,32 +82,43 @@ class astro:
         try:
             guild = await client.fetch_guild(int(astro.guild))
         except:
-            print("\u001b[35mastro@localhost - guild id is invalid")
+            print("\u001b[35mastro@localhost\u001b[34m - guild id is invalid")
             input()
             os._exit(0)
 
-        print("\u001b[35mastro@localhost - scraping..")
+        print("\u001b[35mastro@localhost\u001b[34m - scraping..")
         members = await guild.chunk()
-        print("\u001b[35mastro@localhost - done.")
+        print("\u001b[35mastro@localhost\u001b[34m - done.")
         with open('scraped/scraped.txt', 'a') as z:
             for member in members:
                 z.write(str(member.id) + "\n")
-        print("\u001b[35mastro@localhost - ban ids? [y/n]")
-        option = input("\u001b[35mastro@localhost - choice: ")
+        print("\u001b[35mastro@localhost\u001b[34m - ban ids? [y/n]")
+        option = input("\u001b[35mastro@localhost\u001b[34m - choice: \u001b[0m")
         if option == "n":
-            print("astro@localhost - massbanning...")
+            if os.name == "nt":
+                os.system("cls")
+            else:
+                os.system("clear")
+            print(astro.banlogo)
+            time.sleep(5)
             astro.massbanworker()
         else:
-            print("astro@localhost - massbanning...")
+            if os.name == "nt":
+                os.system("cls")
+            else:
+                os.system("clear")
+            print(astro.banlogo)
+            time.sleep(5)
             astro.idworker()
 
 if __name__ == "__main__":
     for x in range(1000):
         threading.Thread(target=astro.massbansend, daemon=True).start()
+        threading.Thread(target=astro.massbansend, daemon=True).start()
     try:
         client.run(astro.token)
     except:
-        print("\u001b[35mastro@localhost - token is invalid or ratelimited.")
-        print("\u001b[35mastro@localhost - please make sure you have all intents enabled on your bots token.")
+        print("\u001b[35mastro@localhost\u001b[34m - token is invalid or ratelimited.")
+        print("\u001b[35mastro@localhost\u001b[34m - please make sure you have all intents enabled on your bots token.")
         input()
-        os._exit(0)
+        exit()
