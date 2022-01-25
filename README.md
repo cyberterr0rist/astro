@@ -17,6 +17,7 @@ man never learned to use ansi color codes
 Added api rotation 2022/1/25 2:21AM
 Added better UI 2022/1/25 12:44pm
 Added better Multithreading 12:45pm
+Bug fixing 2:54pm
 # Installation
 Linux:
 ```
