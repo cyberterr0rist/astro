@@ -1,7 +1,8 @@
 # Astro
 ![pybadge](https://img.shields.io/badge/made%20in-python-blue)
 ![mainbadge](https://img.shields.io/badge/maintained-true-green)
-![
+![license](https://img.shields.io/badge/license-Apache-blue)
+![GitHub followers](https://img.shields.io/github/followers/actuallyhorrid?style=social)
 
 a faster copy of nells shitty comet nuker
 
