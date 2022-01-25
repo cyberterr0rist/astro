@@ -30,6 +30,7 @@ class astro:
 \u001b[36m                   ╩ ╩╚═╝ ╩ ╩╚═╚═╝
 \u001b[35m                 ───────────────────
 \u001b[35m                   Massban  Horrid
+
 """
     banlogo = """
 \u001b[34m                   ╔═╗╔═╗╔╦╗╦═╗╔═╗
@@ -37,8 +38,20 @@ class astro:
 \u001b[36m                   ╩ ╩╚═╝ ╩ ╩╚═╚═╝
 \u001b[35m                 ───────────────────
 \u001b[35m                      Starting...
+
 """
 
+    print(logo)
+    print("\u001b[35mastro@localhost\u001b[34m - loading script...")
+    time.sleep(5)
+    print("\u001b[35mastro@localhost\u001b[34m - done, press enter to start.")
+    input()
+    if os.name == "nt":
+       os.system("title Astro Massban | Made by horrid; cls")
+    else:
+       terminal_title = "Astro Massban | Made by horrid"
+       print(f'\33]0;{terminal_title}\a', end='', flush=True)
+       os.system("clear")
     print(logo)
     token = getpass("\u001b[35mastro@localhost\u001b[34m - enter token: \u001b[0m")
     guild = input("\u001b[35mastro@localhost\u001b[34m - enter guild id: \u001b[0m")
@@ -54,11 +67,13 @@ class astro:
                 req, url, headers = astro.q.get()
                 s = req(url, headers=headers).result()
                 astro.count += 1
-                print(f"\u001b[35mastro@localhost\u001b[34m - {astro.count} banned member")
+                print(f"\u001b[35mastro@localhost\u001b[34m - {astro.count} banned member - status code: {s.status_code}")
                 if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
-                    print("\u001b[35mastro@localhost\u001b[34m - maximum non-guilded ban members has been exceded.")
+                    print("\u001b[35mastro@localhost\u001b[34m - maximum non-guilded ban members has been exceded, change the entire bot, please exit by yourself.")
                     input()
-                    exit()
+                    input()
+                    input()
+                    input()
                 astro.q.task_done()
         except Exception:
             print(f"\u001b[35mastro@localhost\u001b[34m - error sending requests, contact horrid or nell.")
