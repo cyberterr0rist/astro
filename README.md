@@ -22,3 +22,4 @@ and me for fucking FIXING YOUR EXTERNAL LIBRARIES ADDICTION
 and making a full nuker update soon
 https://t.me/@actuallyhorrid
 # suck a dick
+Added api rotation 2022/1/25 2:21AM
