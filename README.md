@@ -1,4 +1,8 @@
 # Astro
+![pybadge](https://img.shields.io/badge/made%20in-python-blue)
+![mainbadge](https://img.shields.io/badge/maintained-true-green)
+![
+
 a faster copy of nells shitty comet nuker
 
 also nell uses external libraries like its fucking cocaine
@@ -31,6 +35,7 @@ python -m pip install -r requirements.txt
 python main.py
 ```
 Repl.it:
+
 [![Run on Repl.it](https://repl.it/badge/github/plibither8/2048.cpp)](https://repl.it/github/actuallyhorrid/astro)
 # so when will you release the full nuker update
 whenever i like so suck a dick
