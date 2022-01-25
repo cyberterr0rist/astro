@@ -1,4 +1,4 @@
-# Astro massban
+# Astro
 a faster copy of nells shitty comet nuker
 
 also nell uses external libraries like its fucking cocaine
@@ -23,3 +23,5 @@ and making a full nuker update soon
 https://t.me/@actuallyhorrid
 # suck a dick
 Added api rotation 2022/1/25 2:21AM
+Added better UI 2022/1/25 12:44pm
+Added better Multithreading 12:45pm
