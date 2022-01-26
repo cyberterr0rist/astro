@@ -3,6 +3,7 @@
 ![mainbadge](https://img.shields.io/badge/maintained-true-green)
 ![license](https://img.shields.io/badge/license-Apache-blue)
 ![GitHub followers](https://img.shields.io/github/followers/actuallyhorrid?style=social)
+[![Showcase](https://img.shields.io/badge/Video-Showcase-red)](https://youtu.be/gLfO-w7mAq4)
 
 a faster copy of nell's comet nuker
 
