@@ -14,9 +14,10 @@ man never learned to use ansi color codes
 
 (One more note idrc if you clown me for "skidding" comet, comet is very underrated and it's good but the requests are slow so I decided to do the job for Nell also Nell just simply fork it change logo and do whatever you want with it idrc it's yours from the start I just pushed my updates and changed logo faggot I also love you Nell)
 # Change log
-Added api rotation 2022/1/25 2:21AM
+Added api rotation 2022/1/25 2:21am
 Added better UI 2022/1/25 12:44pm
 Added better Multithreading 12:45pm
+Added proxy support 10:13pm
 Bug fixing 2:54pm
 # Installation
 Linux:
