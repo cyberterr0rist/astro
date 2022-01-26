@@ -84,12 +84,12 @@ class astro:
         try:
             while True:
                 req, url, headers = astro.q.get()
-                p = open("proxies.txt", "r")
-                pr = p.readlines()
-                proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers, proxies=proxy).result()
+#                p = open("proxies.txt", "r")
+#                pr = p.readlines()
+#                proxy = {"HTTP": f"http://{random.choice(pr)}"}
+                s = req(url, headers=headers).result()
                 astro.count += 1
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code}", 1))
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code} - time: {time.ctime()}", 1))
                 if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
                     print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - maximum non-guilded ban members has been exceded, change the entire bot, please exit by yourself.", 1))
                     input()
@@ -138,7 +138,7 @@ class astro:
                 os.system("cls")
             else:
                 os.system("clear")
-            print(astro.logo)
+            print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
             astro.massbanworker()
         else:
@@ -146,7 +146,7 @@ class astro:
                 os.system("cls")
             else:
                 os.system("clear")
-            print(astro.logo)
+            print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
             astro.idworker()
 
