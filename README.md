@@ -27,6 +27,8 @@ Reached version 2.5 12:45am
 Better speed (50/60bans per second) 12:45am
 
 Bypassed new API rate limitation 12:46am
+
+New UI update 12:47am
 # Installation
 Linux:
 ```
