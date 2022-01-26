@@ -20,8 +20,13 @@ Added better UI 2022/1/25 12:44pm
 
 Added better Multithreading 12:45pm
 
-Added proxy support 10:13pm
 Bug fixing 2:54pm
+
+Reached version 2.5 12:45am
+
+Better speed (50/60bans per second) 12:45am
+
+Bypassed new API rate limitation 12:46am
 # Installation
 Linux:
 ```
