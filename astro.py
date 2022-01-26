@@ -55,11 +55,13 @@ class astro:
                                               $ Houston, we've had a problem here - Apollo 13$
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
+                                                                    Log:
+
 '''
     print(Colorate.Vertical(Colors.yellow_to_red, logo, 1))
-    print("astro@localhost - loading script...")
+    print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - loading script...", 1))
     time.sleep(5)
-    print("astro@localhost - done, press enter to start.")
+    print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - done, press enter to start.", 1))
     input()
     if os.name == "nt":
        os.system("title Astro-V1")
@@ -69,8 +71,8 @@ class astro:
        print(f'\33]0;{terminal_title}\a', end='', flush=True)
        os.system("clear")
     print(Colorate.Vertical(Colors.yellow_to_red, logo, 1))
-    token = input("astro@localhost - enter token: \u001b[0m")
-    guild = input("astro@localhost - enter guild id: \u001b[0m")
+    token = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter token: \u001b[0m", 1))
+    guild = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter guild id: \u001b[0m", 1))
     q = queue.Queue()
     session = FuturesSession()
     headers = {"Authorization": f"Bot {token}"}
@@ -83,16 +85,16 @@ class astro:
                 req, url, headers = astro.q.get()
                 s = req(url, headers=headers).result()
                 astro.count += 1
-                print(f"astro@localhost - {astro.count} banned member - status code: {s.status_code}")
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code}", 1))
                 if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
-                    print("astro@localhost - maximum non-guilded ban members has been exceded, change the entire bot, please exit by yourself.")
+                    print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - maximum non-guilded ban members has been exceded, change the entire bot, please exit by yourself.", 1))
                     input()
                     input()
                     input()
                     input()
                 astro.q.task_done()
         except Exception:
-            print(f"astro@localhost - error sending requests, contact horrid or nell.")
+            print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - error sending requests, contact horrid or nell.", 1))
             input()
             exit()
 
@@ -113,7 +115,7 @@ class astro:
         try:
             guild = await client.fetch_guild(int(astro.guild))
         except:
-            print("astro@localhost - guild id is invalid")
+            print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - guild id is invalid", 1))
             input()
             os._exit(0)
 
@@ -123,8 +125,8 @@ class astro:
         with open('scraped/scraped.txt', 'a') as z:
             for member in members:
                 z.write(str(member.id) + "\n")
-        print("astro@localhost - ban ids? [y/n]")
-        option = input("astro@localhost - choice: \u001b[0m")
+        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - ban ids? [y/n]", 1))
+        option = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - choice: \u001b[0m", 1))
         if option == "n":
             if os.name == "nt":
                 os.system("cls")
@@ -149,7 +151,7 @@ if __name__ == "__main__":
     try:
         client.run(astro.token)
     except:
-        print("astro@localhost - token is invalid or ratelimited.")
-        print("astro@localhost - please make sure you have all intents enabled on your bots token.")
+        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - token is invalid or ratelimited.", 1))
+        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - please make sure you have all intents enabled on your bots token.", 1))
         input()
         exit()
