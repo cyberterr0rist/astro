@@ -26,7 +26,7 @@ class astro:
        os.system("clear")
 
     logo = f'''
-                                                                - Astro -
+                                                              - Astro V3 -
                                                      ___
                                                   ,o88888
                                                ,o8888888'
@@ -66,7 +66,7 @@ class astro:
     print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - done, press enter to start.", 1))
     input()
     if os.name == "nt":
-       os.system("title Astro-V1")
+       os.system("title Astro-V3")
        os.system("cls")
     else:
        terminal_title = "Astro Massban | Made by horrid"
@@ -112,7 +112,7 @@ class astro:
             ranapi = [f"https://discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://discordapp.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://canary.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://ptb.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}"]
             astro.q.put((httpx.put, random.choice(ranapi), astro.headers))
             amount += 1
-            os.system(f"title AstroV2 - Bans: {amount}")
+            os.system(f"title AstroV3 - Bans: {amount}")
         astro.q.join()
 
     @client.event
@@ -151,10 +151,7 @@ class astro:
 
 if __name__ == "__main__":
     for x in range(1000):
-        t = threading.Thread(target=astro.massbansend, daemon=True).start()
-#        t.daemon = True
-        t2 = threading.Thread(target=astro.massbansend, daemon=True).start()
-#        t2.daemon = True
+        threading.Thread(target=astro.massbansend, daemon=True).start()
     try:
         client.run(astro.token)
     except:
