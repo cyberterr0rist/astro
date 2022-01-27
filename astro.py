@@ -25,7 +25,9 @@ class astro:
        print(f'\33]0;{terminal_title}\a', end='', flush=True)
        os.system("clear")
 
-    logo = f'''                                                                                                                                                                                   ___
+    logo = f'''
+                                                                - Astro -
+                                                     ___
                                                   ,o88888
                                                ,o8888888'
                          ,:o:o:oooo.        ,8O88Pd8888"                             :::      :::::::: ::::::::::: :::::::::   ::::::::
@@ -85,7 +87,7 @@ class astro:
                 p = open("proxies.txt", "r")
                 pr = p.readlines()
                 proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers, proxies=proxy)
+                s = req(url, headers=headers)
                 astro.count += 1
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code} - time: {time.ctime()}", 1))
                 if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
@@ -93,10 +95,11 @@ class astro:
                     for i in range(50):
                         input()
                 astro.q.task_done()
-        except Exception as err:
-            print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - error sending requests, contact horrid or nell, or press enter to continue at your own risk.", 1))
-            print(err)
-            input()
+        except:
+            if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
+            else:
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
 
     def idworker():
         for memberid in open("scraped/ids.txt"):
@@ -149,6 +152,9 @@ class astro:
 if __name__ == "__main__":
     for x in range(1000):
         t = threading.Thread(target=astro.massbansend, daemon=True).start()
+#        t.daemon = True
+        t2 = threading.Thread(target=astro.massbansend, daemon=True).start()
+#        t2.daemon = True
     try:
         client.run(astro.token)
     except:
