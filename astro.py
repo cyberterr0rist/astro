@@ -8,7 +8,6 @@ import discord
 import threading
 from pystyle import Colorate, Colors
 from discord.ext import commands
-from requests_futures.sessions import FuturesSession
 
 intents = discord.Intents.all()
 intents.members = True
@@ -84,10 +83,9 @@ class astro:
         try:
             while True:
                 req, url, headers = astro.q.get()
-# Add only if you want proxies
-#                p = open("proxies.txt", "r")
-#                pr = p.readlines()
-#                proxy = {"HTTP": f"http://{random.choice(pr)}"}
+                p = open("proxies.txt", "r")
+                pr = p.readlines()
+                proxy = {"HTTP": f"http://{random.choice(pr)}"}
                 s = req(url, headers=headers)
                 astro.count += 1
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code} - time: {time.ctime()}", 1))
