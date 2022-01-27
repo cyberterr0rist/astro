@@ -3,6 +3,7 @@ import sys
 import time
 import queue
 import random
+import httpx
 import discord
 import threading
 from pystyle import Colorate, Colors
@@ -75,7 +76,6 @@ class astro:
     token = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter token: \u001b[0m", 1))
     guild = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter guild id: \u001b[0m", 1))
     q = queue.Queue()
-    session = FuturesSession()
     headers = {"Authorization": f"Bot {token}"}
     apiv = ["v9", "v6"]
     count = 0
@@ -87,7 +87,7 @@ class astro:
 #                p = open("proxies.txt", "r")
 #                pr = p.readlines()
 #                proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers).result()
+                s = req(url, headers=headers)
                 astro.count += 1
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code} - time: {time.ctime()}", 1))
                 if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
@@ -97,21 +97,22 @@ class astro:
                     input()
                     input()
                 astro.q.task_done()
-        except Exception:
+        except Exception as err:
             print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - error sending requests, contact horrid or nell.", 1))
+            print(err)
             input()
             exit()
 
     def idworker():
         for memberid in open("scraped/ids.txt"):
             ranidapi = [f"https://discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}", f"https://discordapp.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}", f"https://canary.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}", f"https://ptb.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}"]
-            astro.q.put((astro.session.put, random.choice(ranidapi), astro.headers))
+            astro.q.put((httpx.put, random.choice(ranidapi), astro.headers))
         astro.q.join()
 
     def massbanworker():
         for member in open("scraped/scraped.txt"):
             ranapi = [f"https://discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://discordapp.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://canary.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://ptb.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}"]
-            astro.q.put((astro.session.put, random.choice(ranapi), astro.headers))
+            astro.q.put((httpx.put, random.choice(ranapi), astro.headers))
             amount += 1
             os.system(f"title AstroV2 - Bans: {amount}")
         astro.q.join()
@@ -149,7 +150,7 @@ class astro:
             print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
             astro.idworker()
-
+#monster what the fuck do you wanna see
 if __name__ == "__main__":
     for x in range(1000):
         threading.Thread(target=astro.massbansend, daemon=True).start()
