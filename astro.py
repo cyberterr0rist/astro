@@ -96,10 +96,9 @@ class astro:
                     input()
                 astro.q.task_done()
         except Exception as err:
-            print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - error sending requests, contact horrid or nell.", 1))
+            print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - error sending requests, contact horrid or nell, or continue at your own risk.", 1))
             print(err)
             input()
-            exit()
 
     def idworker():
         for memberid in open("scraped/ids.txt"):
@@ -152,9 +151,7 @@ class astro:
 if __name__ == "__main__":
     for x in range(1000):
         t = threading.Thread(target=astro.massbansend, daemon=True).start()
-        t.daemon = True
         t2 = threading.Thread(target=astro.massbansend, daemon=True).start()
-        t2.daemon = True
     try:
         client.run(astro.token)
     except:
