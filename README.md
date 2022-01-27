@@ -9,7 +9,7 @@ a faster copy of nell's comet nuker
 
 also nell uses external libraries like it's cocaine
 
-man never learned how to use ansi color codes
+man never learned how to use ANSI color codes
 
 (ily nell)
 
@@ -34,6 +34,8 @@ New UI update 12:47am
 Better HTTP Requests 11:11am
 
 Better Multithreading 11:52am
+
+Added proxies 5:36pm
 # Installation
 Linux:
 ```
