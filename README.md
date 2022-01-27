@@ -32,6 +32,8 @@ Bypassed new API rate limitation 12:46am
 New UI update 12:47am
 
 Better HTTP Requests 11:11am
+
+Better Multithreading 11:52am
 # Installation
 Linux:
 ```
