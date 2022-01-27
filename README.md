@@ -9,7 +9,7 @@ a faster copy of nell's comet nuker
 
 also nell uses external libraries like it's cocaine
 
-man never learned to use ansi color codes
+man never learned how to use ansi color codes
 
 (ily nell)
 
