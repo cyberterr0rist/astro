@@ -30,6 +30,8 @@ Better speed (50/60bans per second) 12:45am
 Bypassed new API rate limitation 12:46am
 
 New UI update 12:47am
+
+Better HTTP Requests 11:11am
 # Installation
 Linux:
 ```
