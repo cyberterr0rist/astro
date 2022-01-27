@@ -84,6 +84,7 @@ class astro:
         try:
             while True:
                 req, url, headers = astro.q.get()
+# Add only if you want proxies
 #                p = open("proxies.txt", "r")
 #                pr = p.readlines()
 #                proxy = {"HTTP": f"http://{random.choice(pr)}"}
@@ -150,11 +151,13 @@ class astro:
             print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
             astro.idworker()
-#monster what the fuck do you wanna see
+
 if __name__ == "__main__":
     for x in range(1000):
-        threading.Thread(target=astro.massbansend, daemon=True).start()
-        threading.Thread(target=astro.massbansend, daemon=True).start()
+        t = threading.Thread(target=astro.massbansend, daemon=True).start()
+        t.daemon = True
+        t2 = threading.Thread(target=astro.massbansend, daemon=True).start()
+        t2.daemon = True
     try:
         client.run(astro.token)
     except:
