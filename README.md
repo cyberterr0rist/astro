@@ -38,6 +38,10 @@ Better Multithreading 11:52am
 Added proxies 5:36pm
 
 Fixed all bugs 5:38pm
+
+Added new MOTD 6:00pm
+
+Added a debugging workflow for faster bug fixing 6:00pm
 # Installation
 Linux:
 ```
