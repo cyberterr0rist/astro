@@ -53,6 +53,8 @@ Repl.it:
 nell1337 for making base nuker
 https://github.com/Nell1337/comet-nuker
 
-and me for FIXING YOUR EXTERNAL LIBRARIES ADDICTION
-and making a full nuker update soon
-https://t.me/actuallyhorrid
+Bana for helping with better requests
+bana#2588
+
+Monarch for helping with bug fixing
+དΔØŜཌ monarch#2567
