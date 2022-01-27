@@ -36,6 +36,8 @@ Better HTTP Requests 11:11am
 Better Multithreading 11:52am
 
 Added proxies 5:36pm
+
+Fixed all bugs 5:38pm
 # Installation
 Linux:
 ```
