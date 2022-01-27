@@ -90,10 +90,8 @@ class astro:
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code} - time: {time.ctime()}", 1))
                 if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
                     print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - maximum non-guilded ban members has been exceded, change the entire bot, please exit by yourself.", 1))
-                    input()
-                    input()
-                    input()
-                    input()
+                    for i in range(50):
+                        input()
                 astro.q.task_done()
         except Exception as err:
             print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - error sending requests, contact horrid or nell, or press enter to continue at your own risk.", 1))
@@ -151,7 +149,6 @@ class astro:
 if __name__ == "__main__":
     for x in range(1000):
         t = threading.Thread(target=astro.massbansend, daemon=True).start()
-        t2 = threading.Thread(target=astro.massbansend, daemon=True).start()
     try:
         client.run(astro.token)
     except:
