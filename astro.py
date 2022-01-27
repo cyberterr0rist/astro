@@ -86,7 +86,7 @@ class astro:
                 p = open("proxies.txt", "r")
                 pr = p.readlines()
                 proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers)
+                s = req(url, headers=headers, proxies=proxy)
                 astro.count += 1
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code} - time: {time.ctime()}", 1))
                 if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
