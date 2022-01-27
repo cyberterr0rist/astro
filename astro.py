@@ -96,7 +96,7 @@ class astro:
                     input()
                 astro.q.task_done()
         except Exception as err:
-            print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - error sending requests, contact horrid or nell, or continue at your own risk.", 1))
+            print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - error sending requests, contact horrid or nell, or press enter to continue at your own risk.", 1))
             print(err)
             input()
 
