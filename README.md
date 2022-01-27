@@ -1,17 +1,11 @@
-# Astro
+# Astro V3
 ![pybadge](https://img.shields.io/badge/made%20in-python-blue)
 ![mainbadge](https://img.shields.io/badge/maintained-true-green)
 ![license](https://img.shields.io/badge/license-Apache-blue)
 ![GitHub followers](https://img.shields.io/github/followers/actuallyhorrid?style=social)
 [![Showcase](https://img.shields.io/badge/Video-Showcase-red)](https://youtu.be/gLfO-w7mAq4)
 
-a faster copy of nell's comet nuker
-
-also nell uses external libraries like it's cocaine
-
-man never learned how to use ANSI color codes
-
-(ily nell)
+A Nuker based on Comet Nuker, except the original owner is a very bad maintainer, and he uses outdated libraries.
 
 (One more note idrc if you clown me for "skidding" comet, comet is very underrated and it's good but the requests are slow so I decided to do the job for Nell also Nell just simply fork it change logo and do whatever you want with it idrc it's yours from the start I just pushed my updates and changed logo faggot I also love you Nell)
 # Change log
@@ -41,6 +35,13 @@ Fixed all bugs 5:38pm
 
 Added new MOTD 6:00pm
 
+Threading bug fix 1:28am
+
+New MOTD 1:28am
+
+Better requests & headers 1:29am
+
+Reached version 3
 Added a debugging workflow for faster bug fixing 6:00pm
 # Installation
 Linux:
