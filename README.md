@@ -71,3 +71,6 @@ bana#2588
 
 Monarch for helping with bug fixing
 དΔØŜཌ monarch#2567
+
+Me for fixing the entire thing
+https://t.me/actuallyhorrid
