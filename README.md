@@ -52,6 +52,8 @@ Reached version 3.4, Added a proxy scraper 4:34am
 Fixed .replit 1:18pm
 
 Added selfbot support 3:21pm
+
+Reached version 3.5.1 3:22pm
 # Installation
 Linux:
 ```
