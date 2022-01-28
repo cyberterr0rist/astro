@@ -75,8 +75,12 @@ class astro:
     print(Colorate.Vertical(Colors.yellow_to_red, logo, 1))
     token = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter token: \u001b[0m", 1))
     guild = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter guild id: \u001b[0m", 1))
+    platform = input(Colorate.Vertical(Colors,yellow_to_red, "astro@localhost - selfbot or bot? 1/2: ",1))
+    if platform == "1":
+        headers = {"Authorization": token}
+    else:
+        headers = {"Authorization": f"Bot {token}"}
     q = queue.Queue()
-    headers = {"Authorization": f"Bot {token}"}
     apiv = ["v9", "v6"]
     count = 0
 
