@@ -54,6 +54,8 @@ Fixed .replit 1:18pm
 Added selfbot support 3:21pm
 
 Reached version 3.5.1 3:22pm
+
+Added automatic proxy scraping for replit 3.35pm
 # Installation
 Linux:
 ```
