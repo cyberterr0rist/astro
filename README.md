@@ -1,4 +1,4 @@
-# Astro V3
+# Astro V4
 ![pybadge](https://img.shields.io/badge/made%20in-python-blue)
 ![mainbadge](https://img.shields.io/badge/maintained-true-green)
 
