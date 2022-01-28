@@ -1,1 +1,1 @@
-run = "pip install -r requirements.txt && python main.py"
+run = "pip install -r requirements.txt && python astro.py"
