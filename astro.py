@@ -95,7 +95,7 @@ class astro:
                     for i in range(50):
                         input()
                 astro.q.task_done()
-        except:
+        except Exception as err:
             if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
             else:
