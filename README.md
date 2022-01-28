@@ -9,9 +9,9 @@ A Nuker based on Comet Nuker, except the original owner is a very bad maintainer
 
 (One more note idrc if you clown me for "skidding" comet, comet is very underrated and it's good but the requests are slow so I decided to do the job for Nell also Nell just simply fork it change logo and do whatever you want with it idrc it's yours from the start I just pushed my updates and changed logo faggot I also love you Nell)
 # Change log
-Added API rotation 2022/1/25 2:21am
+Added API rotation 2:21am
 
-Added better UI 2022/1/25 12:44pm
+Added better UI 12:44pm
 
 Added better Multithreading 12:45pm
 
@@ -41,8 +41,9 @@ New MOTD 1:28am
 
 Better requests & headers 1:29am
 
-Reached version 3
-Added a debugging workflow for faster bug fixing 6:00pm
+Reached version 3, Added a debugging workflow for faster bug fixing 6:00pm
+
+Fixed exception catching issue 3:17am
 # Installation
 Linux:
 ```
