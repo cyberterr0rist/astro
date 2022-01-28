@@ -256,7 +256,7 @@ if __name__ == "__main__":
 
     if astro.option == "4":
         for x in range(1000):
-            threading.Thread(target=astro.chanmakereqsend, daemon=True).start()
+            threading.Thread(target=astro.chancrereqsend, daemon=True).start()
     try:
         client.run(astro.token)
     except:
