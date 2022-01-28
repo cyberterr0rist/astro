@@ -62,6 +62,10 @@ Added channel massdelete 6:31pm
 Added channel masscreate 6:31pm
 
 Reached version 4.0-alpha.1
+
+Fixed bugs 6:53pm
+
+Reached 4.0-beta.2
 # Installation
 Linux:
 ```
