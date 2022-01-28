@@ -46,6 +46,8 @@ Reached version 3, Added a debugging workflow for faster bug fixing 6:00pm
 Fixed exception catching issue 3:17am
 
 Reached version 3.4, Added a proxy scraper 4:34am
+
+Fixed .replit 1:18pm
 # Installation
 Linux:
 ```
