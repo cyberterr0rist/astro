@@ -21,7 +21,7 @@ class astro:
     if os.name == "nt":
        os.system("cls")
     else:
-       terminal_title = "Astro Massban - Made by horrid"
+       terminal_title = "Astro V3 - Made by horrid"
        print(f'\33]0;{terminal_title}\a', end='', flush=True)
        os.system("clear")
 
