@@ -56,6 +56,12 @@ Added selfbot support 3:21pm
 Reached version 3.5.1 3:22pm
 
 Added automatic proxy scraping for replit 3.35pm
+
+Added channel massdelete 6:31pm
+
+Added channel masscreate 6:31pm
+
+Reached version 4.0-alpha.1
 # Installation
 Linux:
 ```
