@@ -1,4 +1,4 @@
-# Astro V4
+# Astro V5
 ![pybadge](https://img.shields.io/badge/made%20in-python-blue)
 ![mainbadge](https://img.shields.io/badge/maintained-true-green)
 
@@ -8,6 +8,8 @@
 [![Showcase](https://img.shields.io/badge/Video-Showcase-red)](https://youtu.be/gLfO-w7mAq4)
 
 A Nuker based on Comet Nuker, except the original owner is a very bad maintainer, and he uses outdated libraries.
+
+The closest nuker to lithium (ily Russian heavy and verlox!!!)
 
 (Nell is no longer a developer since I added more stuff to claim it's mine now , don't skid Nell or I'll fuck your dad, it has an apache2 license and don't care cry about it bozo JP ily Nell.)
 # Change log
