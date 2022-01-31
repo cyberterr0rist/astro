@@ -9,7 +9,7 @@
 
 A Nuker based on Comet Nuker, except the original owner is a very bad maintainer, and he uses outdated libraries.
 
-(One more note idrc if you clown me for "skidding" comet, comet is very underrated and it's good but the requests are slow so I decided to do the job for Nell also Nell just simply fork it change logo and do whatever you want with it idrc it's yours from the start I just pushed my updates and changed logo faggot I also love you Nell)
+(Nell is no longer a developer since I added more stuff to claim it's mine now , don't skid Nell or I'll fuck your dad, it has an apache2 license and don't care cry about it bozo JP ily Nell.)
 # Change log
 Read at changelog.md
 
@@ -33,9 +33,6 @@ Repl.it:
 
 [![Run on Repl.it](https://repl.it/badge/github/plibither8/2048.cpp)](https://repl.it/github/actuallyhorrid/astro)
 # Credits
-nell1337 for making base nuker
-https://github.com/Nell1337/comet-nuker
-
 Bana for helping with better requests
 bana#2588
 
