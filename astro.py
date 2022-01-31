@@ -104,6 +104,7 @@ class astro:
     def chancrereqsend():
         try:
             while True:
+                httpx = httpx.Client()
                 req, url, headers = astro.q.get()
                 p = open("proxies.txt", "r")
                 pr = p.readlines()
