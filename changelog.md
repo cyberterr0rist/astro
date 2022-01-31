@@ -68,3 +68,9 @@ Fixed all bugs 1:17pm
 Added new menu 1:17pm
 
 Added spam feature (unfinished) 1:17pm
+
+Finished spam feature (alpha) 5:04pm
+
+First bugless release!
+
+Reached V5!
