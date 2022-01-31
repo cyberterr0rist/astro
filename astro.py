@@ -51,7 +51,7 @@ class astro:
                                     [1] - massban ids                         [2] - massban scraped
                                     [3] - delete channels                     [4] - create channels
                                     [5] - delete roles                        [6] - create roles
-                                    [7] - prune members                       [8] - spam server (UNFINISHED) 
+                                    [7] - prune members                       [8] - spam server (ALPHA)
 
 > astro.cybin.cc
 > made by horrid
