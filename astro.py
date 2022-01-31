@@ -23,7 +23,7 @@ class astro:
        print(f'\33]0;{terminal_title}\a', end='', flush=True)
        os.system("clear")
 
-    menulogo = f'''
+    menu = f'''
                                                               - Astro v5 -
                                                      ___
                                                   ,o88888
