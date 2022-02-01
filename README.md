@@ -7,11 +7,20 @@
 
 [![Showcase](https://img.shields.io/badge/Video-Showcase-red)](https://youtu.be/gLfO-w7mAq4)
 
-A Nuker based on Comet Nuker, except the original owner is a very bad maintainer, and he uses outdated libraries.
-
 The closest nuker to lithium (ily Russian heavy and verlox!!!)
 
-(Nell is no longer a developer since I added more stuff to claim it's mine now , don't skid Nell or I'll fuck your dad, it has an apache2 license and don't care cry about it bozo JP ily Nell.)
+Nell isn't the real owner of comet nuker as he said :skull:
+Nell: i literally have never heard of astro but this kid wants to say i was a developer for it to feel special
+
+Nice Nell your not the owner of comet nuker!
+
+Nell: crazy how people skid a python file just to feel valid
+
+Correct skidded, but gave you full credits + added new features!
+
+![Nell is retard](https://media.discordapp.net/attachments/929743186488873030/938052752339247154/unknown.png)
+
+Since when is adding a full on nuker = changing logo? 
 # Change log
 Read at changelog.md
 
