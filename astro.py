@@ -142,16 +142,15 @@ class astro:
 '''
     motd = [logo, logo2]
     banner = random.choice(motd)
+    print(Colorate.Vertical(Colors.yellow_to_red, banner, 1))
+    print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - loading settings...", 1))
     with open("settings.json") as f:
         settings = json.load(f)
-    token = settings.get("Token")
-    channames = settings.get("Channel Names")
-    rolenames = settings.get("Role Names")
-    whookusers = settings.get("Webhook Usernames")
-    whookcontents = settings.get("Spam Messages")
-    print(Colorate.Vertical(Colors.yellow_to_red, banner, 1))
-    print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - loading script...", 1))
-    time.sleep(5)
+    token = settings['Account']['Token']
+    channames = settings['Astro']['Channel Names']
+    rolenames = settings['Astro']['Role Names']
+    whookusers = settings['Astro']['Webhook Usernames']
+    whookcontents = settings['Astro']['Spam Messages']
     print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - done, press enter to start.", 1))
     input()
     if os.name == "nt":
