@@ -1,7 +1,13 @@
 {
-    "Token": "OTIxOTAxNjE3MTI3NzgwNDIy.Yb5pyQ.VeZHhoxl8tNWME1Gg6W3FK4Vdac",
-    "Channel Names": ["xyteass","urbad"],
-    "Role Names": ["lol","niggers"],
-    "Webhook Usernames": ["lollol","lollll"],
-    "Spam Messages": ["hjnb","hghvv"]
+    "Account": {
+        "Token": ""
+    },
+
+   "Astro": {
+        "Channel Names": ["astro", "lol"],
+        "Role Names": ["astro", "lol"],
+
+        "Webhook Usernames": ["penis", "xd"],
+        "Spam Messages": ["wizzed with astro | @everyone", "wizzed with astro | @everyone"]
+  }
 }
