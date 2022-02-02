@@ -9,23 +9,7 @@
 
 The closest nuker to lithium (ily Russian heavy and verlox!!!)
 
-Nell isn't the real owner of comet nuker as he said :skull:
-
-Nell: i literally have never heard of astro but this kid wants to say i was a developer for it to feel special
-
-Nice Nell your not the owner of comet nuker, while it was just me saying you own comet nuker :skull:
-
-Nell: crazy how people skid a python file just to feel valid
-
-Correct skidded, but gave you full credits + added new features!
-
-![Nell is retard](https://media.discordapp.net/attachments/929743186488873030/938052752339247154/unknown.png)
-
-Since when is adding a full on nuker = changing logo? 
-
-Cause your mad I removed all the shit you did aka queues now the code is a whole 360° different than yours
-
-If you would like to skid be my guest :smirk:
+Nell is now a dev (ily Nell uwu)
 # Change log
 Read at changelog.md
 
@@ -49,6 +33,9 @@ Repl.it:
 
 [![Run on Repl.it](https://repl.it/badge/github/plibither8/2048.cpp)](https://repl.it/github/actuallyhorrid/astro)
 # Credits
+Nell for xxx
+nell#1500
+
 Bana for helping with better requests
 bana#2588
 
