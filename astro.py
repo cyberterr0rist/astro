@@ -1,17 +1,8 @@
-import os
-import sys
-import time
-import json
-import httpx
-import random
-import discord
-import threading
-from pystyle import Colorate, Colors
-from discord.ext import commands
+import os, sys, time, json, httpx, random, discord, threading; from pystyle import Colorate, Colors; from discord.ext import commands
 
 intents = discord.Intents.all()
 intents.members = True
-client = commands.Bot(command_prefix = "astro!",case_insensitive = False,bot = True,intents=intents)
+client = commands.Bot(command_prefix = "astro!", case_insensitive = False, bot = True, intents=intents)
 amount = 0
 
 class astro:
