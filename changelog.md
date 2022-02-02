@@ -55,8 +55,6 @@ Fixed bugs 6:53pm
 
 Attempt to fix channel creation bug 8:26am
 
-No longer Nell is a developer since I added alot of stuff he can't fork it anymore.
-
 Added role creating 1:16pm
 
 Added role deleting 1:16pm
