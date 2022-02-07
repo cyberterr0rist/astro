@@ -1,13 +1,12 @@
 {
-    "Account": {
-        "Token": ""
-    },
-
-   "Astro": {
-        "Channel Names": ["astro", "lol"],
-        "Role Names": ["astro", "lol"],
-
-        "Webhook Usernames": ["penis", "xd"],
-        "Spam Messages": ["wizzed with astro | @everyone", "wizzed with astro | @everyone"]
+  "token": "",
+  "astro": {
+    "channel_names": ["astro", "lol"],
+    "role_names": ["astro", "lol"],
+    "webhook_usernames": ["penis", "xd"],
+    "spam_messages": [
+      "wizzed with astro | @everyone",
+      "wizzed with astro | @everyone"
+    ]
   }
 }
